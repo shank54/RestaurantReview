@@ -1,0 +1,46 @@
+<% include ../partials/header%>
+<div class="container"> 
+    <div class="row">
+        <div class="col-md-3">
+            <p class="lead">Restaurant Info</p>
+        </div>
+        <div class="col-md-9">
+            <div class="thumbnail">
+                <img class="img-responsive" src="<%= restaurant.image%>">
+                    <div class="caption-full">
+                        <h4 class="pull-right">$20.00/Person</h4>
+                        <h4><a><%= restaurant.name %></a></h4>
+                        <p><%= restaurant.description%></p> 
+                        <p><em>Submitted By <%=restaurant.author.username%></em></p>
+                        <% if(currentUser && restaurant.author.id.equals(currentUser._id)) {%>
+                            <a class="btn btn-warning" href="/restaurants/<%=restaurant._id%>/edit">Edit</a>
+                            <form id="delete-form" action="/restaurants/<%=restaurant._id%>?_method=DELETE" method="POST">
+                                <button class="btn btn-danger">Delete</button>  
+                            </form>
+                        <%} %>
+                    </div>
+            </div>
+            <div class="well">
+                <div class="text-right">
+                    <a class="btn btn-success" href="/restaurants/<%= restaurant._id%>/comments/new">Add New Comments</a>
+                </div>
+                <hr>
+                <% restaurant.comments.forEach(function(comment){%>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <strong><%=comment.author.username %></strong>
+                            <span class="pull-right">10 days ago</span>
+                            <p>
+                                <%= comment.text %>
+                            </p>
+                        </div>
+                    </div>
+                    
+                <%})%>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+    
